@@ -2,12 +2,16 @@ var snapshots = [];
 var resolution = 1 / 5;
 var go = false;
 var counter = 0;
+var widthW;
+var heightH;
 
 function setup() {
-  createCanvas(320, 240);
+  widthW = windowWidth;
+  heightH = windowHeight;
+  createCanvas(widthW, heightH);
   background(50);
   video = createCapture(VIDEO, ready);
-  video.size(320, 240);
+  video.size(widthW, heightH);
 	video.hide();
 }
 
@@ -16,6 +20,7 @@ function ready() {
 }
 
 function draw() {
+  console.log(widthW,heightH);
   if (go) {
     snapshots[counter] = video.get();
 		counter++;
@@ -23,14 +28,14 @@ function draw() {
 			counter = 0;
 		}
   }
-  var w = 320/15;
-  var h = 240/15;
+  var w = widthW/15;
+  var h = heightH/15;
   var x = 0;
   var y = 0;
   for (var i = 0; i < snapshots.length; i++) {
     image(snapshots[(i+frameCount)%snapshots.length], x, y, w, h);
     x = x + w;
-    if (x > 320) {
+    if (x > widthW) {
       x = 0;
       y = y + h;
     }
